@@ -4,9 +4,9 @@ $author[$username]
 $title[Página de Ajuda]
 $description[Olá $username! Seja bem-vindo(a) à página de ajuda.
 
-<:WhiteArrow:1300902704037761056> Comandos: ´$commandsCount´
-<:WhiteArrow:1300902704037761056> Servidores: ´$serverCount´
-<:WhiteArrow:1300902704037761056> Usuários: ´$allMembersCount´
+<:WhiteArrow:1300902704037761056> Comandos: `$commandsCount`
+<:WhiteArrow:1300902704037761056> Servidores: `$serverCount`
+<:WhiteArrow:1300902704037761056> Usuários: `$allMembersCount`
 
 Interaja com o meu abaixo para ver a seção de comandos.]
 $addTimestamp
