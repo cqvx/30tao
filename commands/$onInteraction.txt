@@ -1,0 +1,113 @@
+$nomention
+
+$textSplit[$customID;/] $var[interaction;$splitText[1]]
+$var[valor;$splitText[4]] $var[time;$splitText[5]]
+$var[user_1;$splitText[2]] $var[user_2;$splitText[3]]
+$var[praums;coin]
+
+$if[$and[$var[interaction]==pay;$or[$textSplit[$var[user_1];-]$splitText[2]==0;$textSplit[$var[user_2];-]$splitText[2]==0]==true]==true]
+
+  $if[$checkContains[$var[user_1]/$var[user_2];$authorID]==false] $ephemeral $removeAllComponents
+    <:errado:1292312941030277200> <@$authorID>, você não pode interagir nas interações dos <@$textSplit[$var[user_1];-]$splitText[1]>, <@$textSplit[$var[user_2];-]$splitText[1]>
+    $stop 
+  $endif
+  
+  $if[$getVar[$var[name];$textSplit[$var[user_1];-]$splitText[1]]<$var[valor]] $ephemeral $removeAllComponents
+    <:errado:1292312941030277200> <@$authorID>, o usuário <@$textSplit[$var[user_1];-]$splitText[1]> não possui mais **$numberSeparator[$var[valor]] Miragolds** para $if[$splitText[1]!=$authorID]te $endif pagar.
+    $stop 
+  $endif
+
+  $if[$var[time]<=$getTimestamp] $removeButtons 
+> <:praums:1301266226273718282> <@$textSplit[$var[user_1];-]$splitText[1]> você está prestes a realizar uma transferência de **$numberSeparator[$var[valor]] Miragolds** para <@$textSplit[$var[user_2];-]$splitText[1]>. Para concluir essa transação, ambos os usuários devem confirmar clicando no botão abaixo. Lembre-se, a transferência expirará em <t:$var[time]:F> (<t:$var[time]:R>).
+
+- **Importante:** É proibido comercializar Miragolds por valores reais (por exemplo: conteúdo ilegal/NSFW (+18), Nitro, convites, dinheiro real, etc.). Qualquer violação dessa regra resultará em banimento dos serviços da 30PRAUM.
+
+- **Observação:** Após a aprovação da transação, não será possível solicitar o reembolso dos Praums.
+
+    $addButton[no;...;Pagamento Expirado;danger;yes;😭] 
+    $stop 
+  $endif
+
+    $removeButtons
+    $var[id-1;$textSplit[$var[user_1];-]$splitText[1]-$if[$splitText[1]==$authorID]$if[$splitText[2]==0]1$elseif[$splitText[2]!=0]0$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+    $var[n-1;$if[$splitText[1]==$authorID]$if[$splitText[2]==0]1$elseif[$splitText[2]!=0]0$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+    $var[id-2;$textSplit[$var[user_2];-]$splitText[1]-$if[$splitText[1]==$authorID]$if[$splitText[2]==b]a$elseif[$splitText[2]!=b]b$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+    $var[n-2;$if[$splitText[1]==$authorID]$if[$splitText[2]==b]a$elseif[$splitText[2]!=b]b$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+
+  $if[$or[$var[n-1]!=1;$var[n-2]!=a]==true]
+> <:praums:1301266226273718282> <@$textSplit[$var[user_1];-]$splitText[1]> você está prestes a realizar uma transferência de **$numberSeparator[$var[valor]] Praums** para <@$textSplit[$var[user_2];-]$splitText[1]>. Para concluir essa transação, ambos os usuários devem confirmar clicando no botão abaixo. Lembre-se, a transferência expirará em <t:$var[time]:F> (<t:$var[time]:R>).
+
+- **Importante:** É proibido comercializar Praums por valores reais (por exemplo: conteúdo ilegal/NSFW (+18), Nitro, convites, dinheiro real, etc.). Qualquer violação dessa regra resultará em banimento dos serviços da 30PRAUM.
+
+- **Observação:** Após a aprovação da transação, não será possível solicitar o reembolso dos Praums.
+
+    $addButton[no;pay/$var[id-1]/$var[id-2]/$var[valor]/$var[time];Aceitar Pagamento ($sum[$var[n-1];$replaceText[$replaceText[$var[n-2];b;0];a;1]]/2);primary;no;🤝]
+  $elseif[$and[$var[n-1]==1;$var[n-2]==a]==true]
+
+    $addButton[no;jjj;Pagamento Aceito;success;yes;🤝]
+    $textSplit[$var[user_1];-]
+    $setVar[$var[name];$sub[$getVar[$var[name];$splitText[1]];$var[valor]];$splitText[1]]
+    $textSplit[$var[user_2];-]
+    $setVar[$var[name];$sum[$getVar[$var[name];$splitText[1]];$var[valor]];$splitText[1]]
+
+$sendMessage[$reply> ( 🤝 ) - Pagamento aprovado com sucesso! <@$textSplit[$var[user_2];-]$splitText[1]> recebeu **$numberSeparator[$var[valor]] Praums**! ( [Ir Para a Mensagem\](https://discord.com/channels/$guildID/$channelID/$messageID) )
+- <@$textSplit[$var[user_1];-]$splitText[1]> agora possui <:praums:1301266226273718282> **$numberSeparator[$getVar[$var[name];$splitText[1]]] Praums** e está em **#$numberSeparator[$getLeaderboardPosition[globalUser;$var[name];desc;$splitText[1]]] lugar** no ranking!
+- <@$textSplit[$var[user_2];-]$splitText[1]> agora possui <:praums:1301266226273718282> **$numberSeparator[$getVar[$var[name];$splitText[1]]] Praums** e está em **#$numberSeparator[$getLeaderboardPosition[globalUser;$var[name];desc;$splitText[1]]] lugar** no ranking!
+;no]
+  $endif
+  $stop
+$endif
+
+$if[$and[$var[interaction]==pay;$or[$textSplit[$var[user_1];-]$splitText[2]==1;$textSplit[$var[user_2];-]$splitText[2]==1]==true]==true]
+
+  $if[$checkContains[$var[user_1]/$var[user_2];$authorID]==false] $ephemeral $removeAllComponents
+    <:errado:1292312941030277200> <@$authorID>, você não pode interagir nas interações dos <@$textSplit[$var[user_1];-]$splitText[1]>, <@$textSplit[$var[user_2];-]$splitText[1]>
+    $stop 
+  $endif
+  
+  $if[$getVar[$var[name];$textSplit[$var[user_1];-]$splitText[1]]<$var[valor]] $ephemeral $removeAllComponents
+    <:errado:1292312941030277200> <@$authorID>, o usuário <@$textSplit[$var[user_1];-]$splitText[1]> não possui mais **$numberSeparator[$var[valor]] Praums** para $if[$splitText[1]!=$authorID]te $endifpagar.
+    $stop 
+  $endif
+  
+  $if[$var[time]<=$getTimestamp] $removeButtons 
+> <:praums:1301266226273718282> <@$textSplit[$var[user_1];-]$splitText[1]> você está prestes a realizar uma transferência de **$numberSeparator[$var[valor]] Praums** para <@$textSplit[$var[user_2];-]$splitText[1]>. Para concluir essa transação, ambos os usuários devem confirmar clicando no botão abaixo. Lembre-se, a transferência expirará em <t:$var[time]:F> (<t:$var[time]:R>).
+
+- **Importante:** É proibido comercializar Praums por valores reais (por exemplo: conteúdo ilegal/NSFW (+18), Nitro, convites, dinheiro real, etc.). Qualquer violação dessa regra resultará em banimento dos serviços da 30PRAUM.
+
+- **Observação:** Após a aprovação da transação, não será possível solicitar o reembolso dos Miragolds.
+
+    $addButton[no;...;Pagamento Expirado;danger;yes;😭] 
+    $stop 
+  $endif
+  
+    $removeButtons
+    $var[id-1;$textSplit[$var[user_1];-]$splitText[1]-$if[$splitText[1]==$authorID]$if[$splitText[2]==0]1$elseif[$splitText[2]!=0]0$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+    $var[n-1;$if[$splitText[1]==$authorID]$if[$splitText[2]==0]1$elseif[$splitText[2]!=0]0$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+    $var[id-2;$textSplit[$var[user_2];-]$splitText[1]-$if[$splitText[1]==$authorID]$if[$splitText[2]==b]a$elseif[$splitText[2]!=b]b$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+    $var[n-2;$if[$splitText[1]==$authorID]$if[$splitText[2]==b]a$elseif[$splitText[2]!=b]b$endif$elseif[$splitText[1]!=$authorID]$splitText[2]$endif]
+
+  $if[$or[$var[n-1]!=1;$var[n-2]!=a]==true]
+> <:praums:1301266226273718282>  <@$textSplit[$var[user_1];-]$splitText[1]> você está prestes a realizar uma transferência de **$numberSeparator[$var[valor]] Praums** para <@$textSplit[$var[user_2];-]$splitText[1]>. Para concluir essa transação, ambos os usuários devem confirmar clicando no botão abaixo. Lembre-se, a transferência expirará em <t:$var[time]:F> (<t:$var[time]:R>).
+
+- **Importante:** É proibido comercializar Praums por valores reais (por exemplo: conteúdo ilegal/NSFW (+18), Nitro, convites, dinheiro real, etc.). Qualquer violação dessa regra resultará em banimento dos serviços da 30PRAUM.
+
+- **Observação:** Após a aprovação da transação, não será possível solicitar o reembolso dos Praums.
+
+    $addButton[no;pay/$var[id-1]/$var[id-2]/$var[valor]/$var[time];Aceitar Pagamento ($sum[$var[n-1];$replaceText[$replaceText[$var[n-2];b;0];a;1]]/2);primary;no;🤝]
+  $elseif[$and[$var[n-1]==1;$var[n-2]==a]==true]
+ 
+    $addButton[no;jjj;Pagamento Aceito;success;yes;🤝]
+    $textSplit[$var[user_1];-]
+    $setVar[$var[name];$sub[$getVar[$var[name];$splitText[1]];$var[valor]];$splitText[1]]
+    $textSplit[$var[user_2];-]
+    $setVar[$var[name];$sum[$getVar[$var[name];$splitText[1]];$var[valor]];$splitText[1]]
+
+$sendMessage[$reply> 🤝  Pagamento aprovado com sucesso! <@$textSplit[$var[user_2];-]$splitText[1]> recebeu <:praums:1301266226273718282> **$numberSeparator[$var[valor]] Praums**! ( [Ir Para a Mensagem\](https://discord.com/channels/$guildID/$channelID/$messageID) )
+- <@$textSplit[$var[user_1];-]$splitText[1]> agora possui **$numberSeparator[$getVar[$var[name];$splitText[1]]] Praums** e está em **#$numberSeparator[$getLeaderboardPosition[globalUser;$var[name];desc;$splitText[1]]] lugar** no ranking!
+- <@$textSplit[$var[user_2];-]$splitText[1]> agora possui **$numberSeparator[$getVar[$var[name];$splitText[1]]] Praums** e está em **#$numberSeparator[$getLeaderboardPosition[globalUser;$var[name];desc;$splitText[1]]] lugar** no ranking!
+;no]
+  $endif
+  $stop
+
+$stop $endif
