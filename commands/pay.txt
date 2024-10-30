@@ -26,9 +26,9 @@ $onlyIf[$json[valor]>=$json[valor_minimo];<:errado:1292312941030277200> <@$autho
 $onlyIf[$getVar[$var[name];$authorID]>=$json[valor];<:errado:1292312941030277200> <@$authorID>, seu saldo atual é insuficiente para realizar o pagamento!]
 
 
-> <:miragold:1300203386645254154> <@$json[user_1]> você está prestes a realizar uma transferência de **$numberSeparator[$json[valor]] Praums** para <@$json[user_2]>. Para concluir essa transação, ambos os usuários devem confirmar clicando no botão abaixo. Lembre-se, a transferência expirará em <t:$sum[$getTimestamp;$json[time_limit]]:F> (<t:$sum[$getTimestamp;$json[time_limit]]:R>).
+> <:praums:1301266226273718282> <@$json[user_1]> você está prestes a realizar uma transferência de **$numberSeparator[$json[valor]] Praums** para <@$json[user_2]>. Para concluir essa transação, ambos os usuários devem confirmar clicando no botão abaixo. Lembre-se, a transferência expirará em <t:$sum[$getTimestamp;$json[time_limit]]:F> (<t:$sum[$getTimestamp;$json[time_limit]]:R>).
 
-- **Importante:** É proibido comercializar Praums por valores reais (por exemplo: conteúdo ilegal/NSFW (+18), Nitro, convites, dinheiro real, etc.). Qualquer violação dessa regra resultará em banimento dos serviços do Mirastone.
+- **Importante:** É proibido comercializar Praums por valores reais (por exemplo: conteúdo ilegal/NSFW (+18), Nitro, convites, dinheiro real, etc.). Qualquer violação dessa regra resultará em banimento dos serviços da 30PRAUM.
 
 - **Observação:** Após a aprovação da transação, não será possível solicitar o reembolso dos Praums.
 
