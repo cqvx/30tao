@@ -1,4 +1,5 @@
 {
      "help": ["ajuda", "h"],
      "ban": ["banir"]
+     "pay": ["pagar"]
    }
