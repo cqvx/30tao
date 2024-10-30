@@ -3,7 +3,7 @@ $nomention $defer
 $if[$isSlash==false]$onlyIf[$or[$toLowercase[$message[1]]==pay;$toLowercase[$message[1]]==pagar]==true;]$endif
 $onlyIf[$guildID!=;<@$authorID>, esse comando só pode ser usado em servidores.]
 
-$var[praums;coin]
+$var[name;coin]
 
 $jsonParse[
 {
