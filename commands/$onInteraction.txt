@@ -3,7 +3,7 @@ $nomention
 $textSplit[$customID;/] $var[interaction;$splitText[1]]
 $var[valor;$splitText[4]] $var[time;$splitText[5]]
 $var[user_1;$splitText[2]] $var[user_2;$splitText[3]]
-$var[praums;coin]
+$var[name;coin]
 
 $if[$and[$var[interaction]==pay;$or[$textSplit[$var[user_1];-]$splitText[2]==0;$textSplit[$var[user_2];-]$splitText[2]==0]==true]==true]
 
